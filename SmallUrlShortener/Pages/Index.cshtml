@@ -1,0 +1,36 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@section Scripts {
+<script>
+    $("#shortify-button").click(function () {
+        $.ajax({
+            url: '/api/ShortifyLink/',
+            method: 'POST',
+            data: {
+                url: $("#source-url").val()
+            },
+            success: function (data) {
+                const urlToPrint = `${window.location.origin}/api/redirection/${data}`;
+                $("#result-url").val(urlToPrint);
+            },
+            dataType: 'text'
+        });
+    })
+</script>
+}
+
+<div class="text-left">
+    <p>
+        <label>Source link:</label>
+        <input type="text" id="source-url"/>
+        <button class="btn btn-primary" id="shortify-button">Shortify!</button>
+    </p>
+    <p>
+        <label>Short link:</label>
+        <input type="text" id="result-url" readonly />
+    </p>
+</div>
