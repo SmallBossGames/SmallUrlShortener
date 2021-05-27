@@ -26,22 +26,22 @@ namespace SmallUrlShortener.Controllers
             var shortLinkId = Guid.NewGuid().ToString();
 
             UrlMapping mapping = await _shortenerContext.UrlMappings
-                .Where(x => x.DirectLink == url)
+                .Where(x => x.OriginalLink == url)
                 .SingleOrDefaultAsync();
 
             if(mapping == null)
             {
                 mapping = new UrlMapping
                 {
-                    ShortLink = shortLinkId,
-                    DirectLink = url,
+                    ShortLinkId = shortLinkId,
+                    OriginalLink = url,
                 };
 
                 await _shortenerContext.AddAsync(mapping);
                 await _shortenerContext.SaveChangesAsync();
             }
 
-            return mapping.ShortLink;
+            return mapping.ShortLinkId;
         }
     }
 }

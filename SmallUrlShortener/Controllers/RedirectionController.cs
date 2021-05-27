@@ -24,8 +24,8 @@ namespace SmallUrlShortener.Controllers
         public async Task<IActionResult> RedirectByShortUrlId(string id)
         {
             var targetUrl = await _shortenerContext.UrlMappings
-               .Where(x => x.ShortLink == id)
-               .Select(x => x.DirectLink)
+               .Where(x => x.ShortLinkId == id)
+               .Select(x => x.OriginalLink)
                .SingleOrDefaultAsync();
 
             if(targetUrl == null)

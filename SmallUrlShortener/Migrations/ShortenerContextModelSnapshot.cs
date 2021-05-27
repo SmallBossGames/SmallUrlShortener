@@ -21,15 +21,21 @@ namespace SmallUrlShortener.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("DirectLink")
+                    b.Property<string>("OriginalLink")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ShortLink")
+                    b.Property<string>("ShortLinkId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("URLMappingId");
 
-                    b.HasIndex("DirectLink", "ShortLink");
+                    b.HasIndex("OriginalLink")
+                        .IsUnique();
+
+                    b.HasIndex("ShortLinkId")
+                        .IsUnique();
 
                     b.ToTable("UrlMappings");
                 });

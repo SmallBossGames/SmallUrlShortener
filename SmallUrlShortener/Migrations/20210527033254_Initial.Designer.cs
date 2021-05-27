@@ -8,8 +8,8 @@ using SmallUrlShortener.Data;
 namespace SmallUrlShortener.Migrations
 {
     [DbContext(typeof(ShortenerContext))]
-    [Migration("20210525162908_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210527033254_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,13 +23,21 @@ namespace SmallUrlShortener.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("DirectLink")
+                    b.Property<string>("OriginalLink")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ShortLink")
+                    b.Property<string>("ShortLinkId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("URLMappingId");
+
+                    b.HasIndex("OriginalLink")
+                        .IsUnique();
+
+                    b.HasIndex("ShortLinkId")
+                        .IsUnique();
 
                     b.ToTable("UrlMappings");
                 });
